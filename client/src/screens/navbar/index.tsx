@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, Typography, useTheme } from "@mui/material";
 import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import FlexBetween from "@/components/FlexBetween";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 // type Props = {};
 
@@ -10,6 +11,11 @@ const Navbar = () => {
   const { palette } = useTheme();
 
   const [selected, setSelected] = useState("dashboard");
+
+  // setup dark mode toggle function 
+  const toggleDarkMode = () => {};
+
+
   return (
     <FlexBetween mb={"0.25rem"} p={"0.5rem 0rem"} color={palette.grey[300]}>
       <FlexBetween gap={"0.68rem"}>
@@ -19,6 +25,10 @@ const Navbar = () => {
         </Typography>
       </FlexBetween>
       <FlexBetween gap={"2rem"}>
+        <DarkModeIcon cursor={"pointer"}
+          onClick={toggleDarkMode}
+          sx={{ "&:hover": { color: palette.primary[100] } }}
+        />
         <Box sx={{ "&:hover": { color: palette.primary[100] } }}>
           <Link
             to={"/"}
