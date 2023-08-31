@@ -1,3 +1,4 @@
+import ChartHeader from "@/components/ChartHeader";
 import DashboardBox from "@/components/DashboardBox";
 import { useGetKpisQuery } from "@/state/api";
 import { useTheme } from "@mui/material";
@@ -34,6 +35,11 @@ const Row1 = () => {
   return (
     <>
       <DashboardBox gridArea={"a"}>
+        <ChartHeader
+          title="Revenue and Expenses"
+          subtitle="Upper line represents Revenue, Lower line represents Expenses"
+          sidetext="+4.0%"
+        />
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             width={500}
