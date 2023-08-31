@@ -6,6 +6,8 @@ import { useMemo } from "react";
 import {
   Area,
   AreaChart,
+  Bar,
+  BarChart,
   CartesianGrid,
   Legend,
   Line,
@@ -20,6 +22,7 @@ const Row1 = () => {
   const { palette } = useTheme();
   const { data } = useGetKpisQuery();
 
+  // CHART 1
   const revenueExpenses = useMemo(() => {
     return (
       data &&
@@ -32,6 +35,8 @@ const Row1 = () => {
       })
     );
   }, [data]);
+
+  // CHART 2
   const revenueProfit = useMemo(() => {
     return (
       data &&
@@ -40,6 +45,19 @@ const Row1 = () => {
           name: month.substring(0, 3),
           revenue: revenue,
           profit: (revenue - expenses).toFixed(2),
+        };
+      })
+    );
+  }, [data]);
+
+  // CHART 3
+  const revenue = useMemo(() => {
+    return (
+      data &&
+      data[0].monthlyData.map(({ month, revenue }) => {
+        return {
+          name: month.substring(0, 3),
+          revenue: revenue,
         };
       })
     );
@@ -191,7 +209,61 @@ const Row1 = () => {
           </LineChart>
         </ResponsiveContainer>
       </DashboardBox>
-      <DashboardBox gridArea={"c"}></DashboardBox>
+      <DashboardBox gridArea={"c"}>
+        <ChartHeader
+          title="Monthly Revenue"
+          subtitle="Bar graph representing Revenue Month-by-Month"
+          sidetext="+4.0%"
+        />
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart
+            width={500}
+            height={300}
+            data={revenue}
+            margin={{
+              top: 17,
+              right: 15,
+              left: -5,
+              bottom: 58,
+            }}
+          >
+            <defs>
+              <linearGradient
+                id="colorRevenue"
+                x1={"0"}
+                y1={"0"}
+                x2={"0"}
+                y2={"1"}
+              >
+                <stop
+                  offset={"5%"}
+                  stopColor={palette.primary[300]}
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset={"95%"}
+                  stopColor={palette.primary[300]}
+                  stopOpacity={0}
+                />
+              </linearGradient>
+            </defs>
+            <CartesianGrid vertical={false} stroke={palette.grey[800]} />
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              style={{ fontSize: "12px" }}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              style={{ fontSize: "12px" }}
+            />
+            <Tooltip />
+            <Bar dataKey="revenue" fill="url(#colorRevenue)" />
+          </BarChart>
+        </ResponsiveContainer>
+      </DashboardBox>
     </>
   );
 };
