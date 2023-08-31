@@ -4,7 +4,7 @@ import { useGetKpisQuery } from "@/state/api";
 const Row1 = () => {
   const { data } = useGetKpisQuery();
 
-  console.log(data); // temporary console log to remove unused var error in ts
+  console.log("data", data);
 
   return (
     <>
