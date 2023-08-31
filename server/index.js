@@ -5,8 +5,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
-
-
+import kpiRoutes from "./routes/kpi.js";
+import KPI from "./models/KPI.js";
+import { kpis } from "./data/dummyData.js";
 /* CONFIGURATION */
 dotenv.config();
 
@@ -21,6 +22,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+/* ROUTES */
+
+app.use("/kpi", kpiRoutes);
+
 /* MONGOOSE DB CONNECTION */
 const PORT = process.env.PORT || 8080;
 
@@ -30,8 +35,12 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(async () => {
-    app.listen(PORT, () => {
-      console.log(`MongoDB is Now Connected & Server is Live on Port: ${PORT}`);
-    });
+    app.listen(PORT, () =>
+      console.log(`MongoDB is Now Connected & Server is Live on Port: ${PORT}`)
+    );
+
+    // SEEDED DUMMY DATA ONE-TIME OR AS NEEDED
+    // await mongoose.connection.db.dropDatabase();
+    // KPI.insertMany(kpis);
   })
   .catch((err) => console.log(`Error connecting to Server: ${err}`));
